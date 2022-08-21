@@ -1,0 +1,4 @@
+Realizar un sistema backend que permita el ingreso de atletas a la db sql
+Cada atleta debe contener los siguientes datos: nombre completo, fecha y email
+Se debera poder modificar datos, eliminar o agregar atleta, ver todos los 
+atletas cargados.
