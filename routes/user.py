@@ -11,5 +11,8 @@ def get_atletas():
 
 @user.post("/atletas")
 def create_atleta(user: User): 
-    print (user)
-    return "probando post"
+    new_atleta = {"name": user.name, "email":user.email, "date":user.date}
+    print (new_atleta)
+    result = conn.execute(atletas.insert().values(new_atleta))
+    return conn.execute(atletas.select().where(atletas.c.id == result.lastrowid)).first()#consulta a la db
+
