@@ -1,7 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Response #Response sirve para devolver HTTP como returns. Se importa tambn desde starlette el paquetre status
 from config.db import conn #conn es la variable que me permite conectar con la db ver en config
 from models.user import atletas
 from schemas.user import User #desde el archivo user de schemas importo la clase User (ver en argumento de funcion post)
+from starlette.status import HTTP_204_NO_CONTENT
 
 user = APIRouter()
 
@@ -24,6 +25,6 @@ def atleta_por_id(id: str):
 @user.delete("/atletas/{id}")
 def delete_atleta_por_id(id: str):
     conn.execute(atletas.delete().where(atletas.c.id == id))
-    return "atleta deleted"
+    return Response(status_code=HTTP_204_NO_CONTENT)
                                                                                     
 
