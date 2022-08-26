@@ -13,6 +13,17 @@ def get_atletas():
 def create_atleta(user: User): 
     new_atleta = {"name": user.name, "email":user.email, "date":user.date}
     print (new_atleta)
-    result = conn.execute(atletas.insert().values(new_atleta))
-    return conn.execute(atletas.select().where(atletas.c.id == result.lastrowid)).first()#consulta a la db
+    result = conn.execute(atletas.insert().values(new_atleta)) #result guarda el ID del alteta guardado
+    return conn.execute(atletas.select().where(atletas.c.id == result.lastrowid)).first()#consulta a la db el id (alojado en reult)
+                                                                                         #y devuelve el objeto que ha guardado
+                                                                                         #esto lo vemos en/docs al crear un atleta
+@user.get("/atletas/{id}")
+def atleta_por_id(id: str):
+    return conn.execute(atletas.select().where(atletas.c.id == id)).first() 
+
+@user.delete("/atletas/{id}")
+def delete_atleta_por_id(id: str):
+    conn.execute(atletas.delete().where(atletas.c.id == id))
+    return "atleta deleted"
+                                                                                    
 
