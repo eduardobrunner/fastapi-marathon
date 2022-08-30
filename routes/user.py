@@ -12,7 +12,7 @@ user = APIRouter()
 # ---------OBTENER TODOS LOS ATLETAS DE LA DB
 
 
-@user.get("/atletas")
+@user.get("/atletas", response_model=list[User])
 def get_atletas():
     # retorna una consulta a la db
     return conn.execute(atletas.select()).fetchall()
