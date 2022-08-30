@@ -51,4 +51,4 @@ def delete_atleta_por_id(id: str):
 def update_atleta_por_id(id: str, user: User):
     conn.execute(atletas.update().values(
         name=user.name, email=user.email, date=user.date).where(atletas.c.id== id))
-    return "updated"
+    return conn.execute(atletas.select().where(atletas.c.id == id)).first()
