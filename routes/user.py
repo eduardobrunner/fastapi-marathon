@@ -11,8 +11,7 @@ user = APIRouter()
 
 # ---------OBTENER TODOS LOS ATLETAS DE LA DB
 
-
-@user.get("/atletas", response_model=list[User])
+@user.get("/atletas", response_model=list[User], tags=["Atletas"])
 def get_atletas():
     # retorna una consulta a la db
     return conn.execute(atletas.select()).fetchall()
@@ -20,7 +19,7 @@ def get_atletas():
 # ---------AGEGAR ATLETA A LA DB
 
 
-@user.post("/atletas")
+@user.post("/atletas",tags=["Atletas"])
 def create_atleta(user: User):
     new_atleta = {"name": user.name, "email": user.email, "date": user.date}
     print(new_atleta)
@@ -32,14 +31,14 @@ def create_atleta(user: User):
 # ---------OBTENER ATLETA POR ID                                                                                                                                                                           #esto lo vemos en/docs al crear un atleta
 
 
-@user.get("/atletas/{id}")
+@user.get("/atletas/{id}",tags=["Atletas"])
 def atleta_por_id(id: str):
     return conn.execute(atletas.select().where(atletas.c.id == id)).first()
 
 # ---------BORRAR ATLETA POR ID
 
 
-@user.delete("/atletas/{id}")
+@user.delete("/atletas/{id}",tags=["Atletas"])
 def delete_atleta_por_id(id: str):
     conn.execute(atletas.delete().where(atletas.c.id == id))
     return Response(status_code=HTTP_204_NO_CONTENT)
@@ -47,7 +46,7 @@ def delete_atleta_por_id(id: str):
 # ---------ACTUALIZAR ATLETA POR ID
 
 
-@user.put("/atletas/{id}")
+@user.put("/atletas/{id}",tags=["Atletas"])
 def update_atleta_por_id(id: str, user: User):
     conn.execute(atletas.update().values(
         name=user.name, email=user.email, date=user.date).where(atletas.c.id== id))
